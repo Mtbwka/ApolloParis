@@ -1,0 +1,43 @@
+.footer {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.footer span {
+  cursor: pointer;
+}
+
+.contactForm {
+  overflow: hidden;
+}
+
+.openContactForm {
+  height: 300px;
+  transition: height 1s ease-out;
+}
+
+.closeContactForm {
+  height: 0px;
+  transition: height 1s ease-out;
+}
+
+.sendButton {
+  color: #fff;
+}
+
+input {
+  overflow: visible;
+  appearance: none;
+  outline: none;
+  background-color: transparent;
+  -webkit-appearance: none;
+  font-size: 2.5rem;
+  border: 0;
+  color: #fff;
+  text-align: center;
+}
+
+input::placeholder {
+  color: #fff;
+}

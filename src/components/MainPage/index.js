@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-export default () => {
-  return <h1>MAIN PAGE</h1>;
+export default ({ setCurrentPage }) => {
+  const [toggleMenu, setToggleMenu] = useState(false);
+
+  return <h1>main</h1>;
 };
