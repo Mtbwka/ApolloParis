@@ -36,9 +36,6 @@ export default ({ setCurrentPage }) => {
                 </a>
               </li>
             ))}
-            <a>
-              <li onClick={() => setCurrentPage(pages.CONTACT)}>CONTACT</li>
-            </a>
           </ul>
         </div>
       </nav>

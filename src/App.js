@@ -8,6 +8,8 @@ import ContactPage from './components/ContactPage';
 import Menu from './components/Menu';
 import Footer from './components/Footer';
 
+const image = require('./assets/background.jpeg');
+
 export default () => {
   const [currentPage, setCurrentPage] = useState(pages.MAIN);
 
@@ -24,6 +26,8 @@ export default () => {
 
   return (
     <>
+      <img className='bg img-fluid' src={image} alt='' />
+
       <Menu setCurrentPage={setCurrentPage} />
       {/* <Switch /> */}
       <Footer />
