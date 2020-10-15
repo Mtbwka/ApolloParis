@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -9,6 +9,13 @@ export default ({ showContact, sent, setSent }) => {
   const [subjectError, setSubjectError] = useState(null);
   const [message, setMessage] = useState('');
   const [messageError, setMessageError] = useState(null);
+
+  useEffect(() => {
+    console.log('ENTER');
+    return () => {
+      console.log('email', email);
+    };
+  }, [email]);
 
   const validateEmail = () => {
     if (!email || email === '') {

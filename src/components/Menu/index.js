@@ -26,7 +26,7 @@ export default ({ setCurrentPage }) => {
           </span>
 
           <ul className={`menu ${toggleMenu ? 'openMenu' : 'closeMenu'}`}>
-            <a>
+            <a onClick={() => setCurrentPage(pages.MUSIC)}>
               <li>MUSIC</li>
             </a>
             {socialLinks.map(l => (

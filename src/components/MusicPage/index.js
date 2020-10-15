@@ -1,5 +1,11 @@
 import React from 'react';
 
+const image = require('../../assets/music-background.jpeg');
+
 export default () => {
-  return <h1>MUSIC PAGE</h1>;
+  return (
+    <>
+      <img className='bg img-fluid' src={image} alt='' />
+    </>
+  );
 };
