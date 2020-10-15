@@ -1,6 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import emailjs from 'emailjs-com';
 
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+const sendStatus = {
+  SUCCESS: 'SUCCESS',
+  ERROR: 'ERROR',
+};
 
 export default ({ showContact, sent, setSent }) => {
   const [email, setEmail] = useState('');
@@ -9,13 +15,6 @@ export default ({ showContact, sent, setSent }) => {
   const [subjectError, setSubjectError] = useState(null);
   const [message, setMessage] = useState('');
   const [messageError, setMessageError] = useState(null);
-
-  useEffect(() => {
-    console.log('ENTER');
-    return () => {
-      console.log('email', email);
-    };
-  }, [email]);
 
   const validateEmail = () => {
     if (!email || email === '') {
@@ -52,13 +51,34 @@ export default ({ showContact, sent, setSent }) => {
     return true;
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     let valid = validateEmail();
     valid = validateSubject() && valid;
     valid = validateMessage() && valid;
 
     if (valid) {
-      setSent(true);
+      try {
+        emailjs.send();
+        const res = await emailjs.send(
+          process.env.EMAILJS_SERVICE_ID,
+          process.env.EMAILJS_TEMPLATE_ID,
+          {
+            subject,
+            email,
+            message,
+          },
+          process.env.EMAILJS_USER_ID
+        );
+        setSent(sendStatus.SUCCESS);
+      } catch (error) {
+        setSent(sendStatus.ERROR);
+      }
+
+      setTimeout(() => {
+        setEmail('');
+        setSubject('');
+        setMessage('');
+      }, 1000);
     }
   };
 
@@ -68,11 +88,15 @@ export default ({ showContact, sent, setSent }) => {
         showContact ? 'openContactForm' : 'closeContactForm'
       }`}
     >
-      {showContact && sent ? (
-        <>
-          <h1>Message sent blablabla</h1>
-          <h1>senk u fak u</h1>
-        </>
+      {sent ? (
+        sent === sendStatus.ERROR ? (
+          <h1>Something went wrong</h1>
+        ) : (
+          <>
+            <h1>Message sent blablabla</h1>
+            <h1>senk u fak u</h1>
+          </>
+        )
       ) : (
         <>
           <div className='container-fluid'>
