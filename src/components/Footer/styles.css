@@ -1,3 +1,7 @@
+* {
+  font-size: 25px;
+}
+
 .footer {
   text-align: center;
   margin-bottom: 20px;
@@ -12,6 +16,10 @@
   overflow: hidden;
 }
 
+.newsletterForm {
+  overflow: hidden;
+}
+
 .openContactForm {
   height: 60vh;
   transition: height 1s ease-out;
@@ -22,8 +30,19 @@
   transition: height 1s ease-out;
 }
 
+.openNewsletterForm {
+  height: 60vh;
+  transition: height 1s ease-out;
+}
+
+.closeNewsletterForm {
+  height: 0px;
+  transition: height 1s ease-out;
+}
+
 .sendButton {
   color: #fff;
+  display: initial !important;
 }
 
 textarea {
@@ -32,17 +51,19 @@ textarea {
   outline: none;
   background-color: transparent;
   -webkit-appearance: none;
-  font-size: 25px;
+  font-size: 16px;
   border: 0;
   color: #fff;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.2);
   margin-top: 10px;
   margin-bottom: 10px;
+  resize: none;
 }
 
 textarea::placeholder {
   color: #fff;
+  font-size: 16px;
 }
 
 input {
@@ -51,7 +72,7 @@ input {
   outline: none;
   background-color: transparent;
   -webkit-appearance: none;
-  font-size: 25px;
+  font-size: 16px;
   border: 0;
   color: #fff;
   text-align: center;
@@ -62,16 +83,39 @@ input {
 
 input::placeholder {
   color: #fff;
+  font-size: 16px;
+}
+
+.grecaptcha-badge {
+  display: none !important;
 }
 
 @media (max-width: 576px) {
   * {
-    font-size: 25px;
+    font-size: 15px;
   }
   textarea {
     font-size: 25px;
   }
   h1 {
     font-size: 25px;
+  }
+  .bg {
+    height: 100%;
+  }
+  input {
+    font-size: 15px;
+  }
+  textarea {
+    font-size: 15px;
+  }
+  .music-menu-container {
+    height: 25vh;
+  }
+  .openContactForm {
+    height: 60vh;
+  }
+  .rights {
+    font-size: 6px;
   }
 }

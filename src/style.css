@@ -22,7 +22,7 @@ body {
   font-family: 'Roboto Medium';
   font-size: 25px;
   text-transform: uppercase;
-  padding: 30px;
+  /* padding: 30px; */
   /* background-image: url('./assets/main-background.jpeg'); */
   /* background-size: cover;
   position: absolute;
@@ -32,10 +32,6 @@ body {
   right: 0;
   width: 100%;
   height: 100%; */
-}
-
-header {
-  position: fixed;
 }
 
 .bg {
@@ -54,6 +50,11 @@ header {
   cursor: pointer;
   padding: 0;
   overflow: hidden;
+  z-index: 100;
+}
+
+.musicMenu {
+  text-align: right;
 }
 
 .openMenu {
@@ -76,16 +77,64 @@ header {
   transition: padding-left 0.75s ease-out;
 }
 
-.menuToggle {
+.openMusicMenuButton {
+  padding-right: 45%;
+  transition: padding-right 0.75s ease-out;
+  text-align: end;
+}
+
+.closeMusicMenuButton {
+  padding-right: 0%;
+  transition: padding-right 0.75s ease-out;
+  text-align: end;
+}
+
+.music-menu-container {
+  position: fixed;
+  flex-direction: column;
+  align-items: center;
+  top: 10vh;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+}
+
+.back-button {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+}
+
+.music-list {
+  list-style-type: none;
+  cursor: pointer;
+  text-align: right;
+}
+
+.container {
   display: inline-block;
 }
 
-.menuToggle li {
-  display: block;
-  font-size: 25px;
+.mainMenuContainer {
+  position: fixed;
+  z-index: 100;
+  left: 30px;
+  top: 30px;
 }
 
-.menuToggle span {
+.musicMenuContainer {
+  position: fixed;
+  z-index: 100;
+  right: 30px;
+  top: 30px;
+}
+
+/* .menuToggle li {
+  display: block;
+  font-size: 25px;
+} */
+
+.container span {
   cursor: pointer;
   display: block;
 }
@@ -100,7 +149,6 @@ a {
 
 a:hover {
   text-decoration: none;
-  animation: pulse 1s infinite;
 }
 
 a:visited {
@@ -108,16 +156,84 @@ a:visited {
   text-decoration: none;
 }
 
+.pulse {
+  cursor: pointer;
+}
+.pulse:hover {
+  animation: pulse 1s infinite;
+}
+
+/* .pulse-red {
+  animation: pulse-red 1s infinite;
+} */
+.pulse-red,
+.pulse-red::placeholder {
+  color: var(--main-text-color);
+  animation: pulse-red 2s infinite;
+  -webkit-animation: pulse-red 2s infinite;
+}
+
+.disabledButton {
+  color: rgba(255, 255, 255, 0.7);
+  cursor: default !important;
+}
+
+.bgTransitionStart {
+  animation: bg-transition-start 1s linear;
+}
+
+.bgTransitionEnd {
+  animation: bg-transition-end 1s linear;
+}
+
+.rights {
+  writing-mode: vertical-lr;
+  position: fixed;
+  bottom: 5vh;
+  right: 5px;
+  cursor: default !important;
+  user-select: none;
+  font-size: 10px;
+}
+
+@keyframes bg-transition-start {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1000);
+  }
+}
+
+@keyframes bg-transition-end {
+  0% {
+    transform: scale(1000);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 @keyframes pulse {
   0% {
     color: rgba(255, 255, 255, 1);
   }
-
   50% {
     color: rgba(255, 255, 255, 0.5);
   }
-
   100% {
     color: rgba(255, 255, 255, 1);
+  }
+}
+
+@keyframes pulse-red {
+  0% {
+    --main-text-color: rgba(255, 255, 255, 1);
+  }
+  50% {
+    --main-text-color: rgba(255, 0, 0, 1);
+  }
+  100% {
+    --main-text-color: rgba(255, 255, 255, 1);
   }
 }

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import emailjs from 'emailjs-com';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -16,9 +17,11 @@ export default ({ showContact, sent, setSent }) => {
   const [message, setMessage] = useState('');
   const [messageError, setMessageError] = useState(null);
 
+  const recaptchaRef = useRef(null);
+
   const validateEmail = () => {
     if (!email || email === '') {
-      setEmailError('Please fill in email');
+      setEmailError(true);
       return false;
     }
     if (!emailRegex.test(String(email).toLowerCase())) {
@@ -31,7 +34,7 @@ export default ({ showContact, sent, setSent }) => {
 
   const validateSubject = () => {
     if (!subject || subject === '') {
-      setSubjectError('Please fill in subject');
+      setSubjectError(true);
       return false;
     }
     setSubjectError(null);
@@ -40,11 +43,11 @@ export default ({ showContact, sent, setSent }) => {
 
   const validateMessage = () => {
     if (!message || message === '') {
-      setMessageError('Please fill in message');
+      setMessageError(true);
       return false;
     }
-    if (message && message.length < 10) {
-      setMessageError('Please provide at least 10 symbols');
+    if (message && message.length < 20) {
+      setMessageError(true);
       return false;
     }
     setMessageError(null);
@@ -57,20 +60,24 @@ export default ({ showContact, sent, setSent }) => {
     valid = validateMessage() && valid;
 
     if (valid) {
-      try {
-        emailjs.send();
-        const res = await emailjs.send(
-          process.env.EMAILJS_SERVICE_ID,
-          process.env.EMAILJS_TEMPLATE_ID,
-          {
-            subject,
-            email,
-            message,
-          },
-          process.env.EMAILJS_USER_ID
-        );
-        setSent(sendStatus.SUCCESS);
-      } catch (error) {
+      const token = await recaptchaRef.current.executeAsync();
+      if (token && token.length > 0) {
+        try {
+          await emailjs.send(
+            process.env.REACT_APP_EMAIL_SERVICE_ID,
+            process.env.REACT_APP_EMAIL_TEMPLATE_ID,
+            {
+              subject,
+              email,
+              message,
+            },
+            process.env.REACT_APP_EMAIL_USER_ID
+          );
+          setSent(sendStatus.SUCCESS);
+        } catch (error) {
+          setSent(sendStatus.ERROR);
+        }
+      } else {
         setSent(sendStatus.ERROR);
       }
 
@@ -92,10 +99,7 @@ export default ({ showContact, sent, setSent }) => {
         sent === sendStatus.ERROR ? (
           <h1>Something went wrong</h1>
         ) : (
-          <>
-            <h1>Message sent blablabla</h1>
-            <h1>senk u fak u</h1>
-          </>
+          <h1>SENT</h1>
         )
       ) : (
         <>
@@ -105,10 +109,9 @@ export default ({ showContact, sent, setSent }) => {
                 value={email}
                 placeholder='E-MAIL'
                 onChange={e => setEmail(e.target.value)}
-                className='col-8'
+                className={`col-8 ${emailError && 'pulse-red'}`}
               />
             </div>
-            {emailError && <span>{emailError}</span>}
           </div>
 
           <div className='container-fluid'>
@@ -117,29 +120,43 @@ export default ({ showContact, sent, setSent }) => {
                 value={subject}
                 placeholder='SUBJECT'
                 onChange={e => setSubject(e.target.value)}
-                className='col-8'
+                className={`col-8 ${subjectError && 'pulse-red'}`}
               />
             </div>
-            {subjectError && <span>{subjectError}</span>}
           </div>
 
           <div className='container-fluid'>
             <div className='flex-row'>
               <textarea
                 value={message}
-                placeholder='MESSAGE'
-                onChange={e => setMessage(e.target.value)}
-                className='col-8 contact'
-                rows='4'
+                placeholder='MESSAGE (min 20, max 500)'
+                onChange={e => {
+                  if (
+                    e.target.value.length <= 500 ||
+                    e.target.value.length === 0
+                  ) {
+                    setMessage(e.target.value);
+                  }
+                }}
+                className={`col-8 contact ${messageError && 'pulse-red'}`}
+                rows='8'
               />
             </div>
-            {messageError && <span>{messageError}</span>}
           </div>
 
           <div className='container-fluid'>
-            <span className='sendButton col-8' onClick={handleSend}>
-              send
-            </span>
+            <div className='flex-row'>
+              <span className='sendButton pulse col-8' onClick={handleSend}>
+                SEND
+              </span>
+            </div>
+            <ReCAPTCHA
+              theme='dark'
+              ref={recaptchaRef}
+              sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+              stoken={process.env.REACT_APP_RECAPTCHA_SERVER_TOKEN}
+              size='invisible'
+            />
           </div>
         </>
       )}

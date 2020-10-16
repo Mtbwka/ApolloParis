@@ -3,18 +3,18 @@ import './style.css';
 import { pages } from './common';
 
 import MainPage from './components/MainPage';
-import MusicPage from './components/MusicPage';
-import ContactPage from './components/ContactPage';
+
+const mainImage = require('./assets/main-background.jpeg');
+
+console.log('process.env :>> ', process.env);
 
 export default () => {
   const [currentPage, setCurrentPage] = useState(pages.MAIN);
 
-  switch (currentPage) {
-    case 'MAIN':
-      return <MainPage setCurrentPage={setCurrentPage} />;
-    case 'MUSIC':
-      return <MusicPage setCurrentPage={setCurrentPage} />;
-    case 'CONTACT':
-      return <ContactPage setCurrentPage={setCurrentPage} />;
-  }
+  return (
+    <>
+      <img className='bg img-fluid' src={mainImage} alt='Main' />
+      <MainPage setCurrentPage={setCurrentPage} />
+    </>
+  );
 };
