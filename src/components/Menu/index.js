@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { pages } from '../../common';
 
 const socialLinks = [
   { label: 'INSTAGRAM', link: 'https://www.instagram.com/apolloparis_/' },
@@ -22,7 +21,7 @@ const musicLinks = [
   { label: 'SOUNDCLOUD', link: 'https://soundcloud.com/apolloparis6' },
 ];
 
-export default ({ setCurrentPage, bgRef }) => {
+export default () => {
   const [showMainMenu, setShowMainMenu] = useState(false);
   const [showMusicMenu, setShowMusicMenu] = useState(false);
 
@@ -42,7 +41,12 @@ export default ({ setCurrentPage, bgRef }) => {
             <ul className={`menu ${showMainMenu ? 'openMenu' : 'closeMenu'}`}>
               {socialLinks.map(l => (
                 <li key={l.label}>
-                  <a href={l.link} className='pulse' target='_blank'>
+                  <a
+                    href={l.link}
+                    className='pulse'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  >
                     {l.label}
                   </a>
                 </li>
@@ -66,7 +70,12 @@ export default ({ setCurrentPage, bgRef }) => {
             >
               {musicLinks.map(l => (
                 <li key={l.label}>
-                  <a href={l.link} className='pulse' target='_blank'>
+                  <a
+                    href={l.link}
+                    className='pulse'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  >
                     {l.label}
                   </a>
                 </li>

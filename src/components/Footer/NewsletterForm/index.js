@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import MailchimpSubscribe from 'react-mailchimp-subscribe';
 import ReCAPTCHA from 'react-google-recaptcha';
 
@@ -12,7 +12,6 @@ const sendStatus = {
 export default ({ showNewsLetter, sent, setSent }) => {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState(null);
-  const [validCaptcha, setValidCaptcha] = useState(null);
 
   const recaptchaRef = useRef(null);
 
