@@ -12,7 +12,10 @@ const socialLinks = [
 
 const musicLinks = [
   { label: 'APPLE MUSIC', link: 'http://itunes.apple.com/album/id/1535368566' },
-  { label: 'SPOTIFY', link: '' },
+  {
+    label: 'SPOTIFY',
+    link: 'https://open.spotify.com/album/6e4Pi6woQqcKS7mqHZFfpj',
+  },
   {
     label: 'iTUNES',
     link: 'http://itunes.apple.com/album/id1535368566?ls=1&app=itunes',
@@ -23,7 +26,7 @@ const musicLinks = [
 
 export default () => {
   const [showMainMenu, setShowMainMenu] = useState(false);
-  const [showMusicMenu, setShowMusicMenu] = useState(false);
+  const [showMusicMenu, setShowMusicMenu] = useState(true);
 
   return (
     <header>
